@@ -1,6 +1,5 @@
 import config
 import queries
-import logging
 from googlesearch import search
 import telegram
 from telegram import (
@@ -14,12 +13,6 @@ from telegram.ext import (
 	MessageHandler,
 	Filters,
 )
-
-logging.basicConfig(
-	format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', 
-	level=logging.INFO)
-
-logger = logging.getLogger()
 
 def start(update, context):
 	queries.sign_up_user(update.message.from_user.id)
