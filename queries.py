@@ -17,8 +17,11 @@ def get_phrases(user_id: str) -> dict:
 	con = sqlite3.connect(config.db_name)
 	c = con.cursor()
 	c.execute("SELECT bot_lang FROM user_data WHERE user_id=?", (user_id,))
-	result = c.fetchone()[0]
-	return phrases.phrases[result]
+	result = c.fetchone()
+	if not result:
+		sign_up_user(user_id)
+	result = ('ru',)
+	return phrases.phrases[result[0]]
 
 def init_db():
 	con = sqlite3.connect(config.db_name)

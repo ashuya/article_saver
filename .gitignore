@@ -6,3 +6,4 @@ conv_bot.py
 settings.json
 .google-cookie
 *.swp
+*.service
