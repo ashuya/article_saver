@@ -1,0 +1,8 @@
+config.py
+__pycache__
+env
+conv_bot.py
+*.db
+settings.json
+.google-cookie
+*.swp
