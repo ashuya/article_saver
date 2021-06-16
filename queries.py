@@ -28,8 +28,20 @@ def get_phrases(user_id: str) -> dict:
 	result = c.fetchone()
 	if not result:
 		sign_up_user(user_id)
-	result = ('ru',)
+		result = ('ru',)
 	return phrases.phrases[result[0]]
+
+def get_lang(user_id: str) -> dict:
+	con = sqlite3.connect(config.db_name)
+	c = con.cursor()
+	c.execute("SELECT lang FROM user_data WHERE user_id=?", (user_id,))
+	result = c.fetchone()
+	if not result:
+		sign_up_user(user_id)
+		result = ('ru',)
+	return result[0]
+
+
 
 def init_db():
 	con = sqlite3.connect(config.db_name)
@@ -46,6 +58,27 @@ def init_db():
 		name str NOT NULL,
 		link str
 		);""")
+	c.execute("""CREATE TABLE IF NOT EXISTS find_results(
+		user_id str,
+		link str
+		);""")
+	con.commit()
+	con.close()
+
+def get_results(user_id: str):
+	con = sqlite3.connect(config.db_name)
+	c = con.cursor()
+	c.execute("SELECT link FROM find_results WHERE user_id=?",(user_id,))
+	results = [a[0] for a in c.fetchall()]
+	con.close()
+	return results
+	
+def save_results(user_id: str, results):
+	con = sqlite3.connect(config.db_name)
+	c = con.cursor()
+	c.execute("DELETE FROM find_results WHERE user_id=?",(user_id,))
+	for r in results:
+		c.execute("INSERT INTO find_results(user_id,link) VALUES(?,?)",(user_id,r))
 	con.commit()
 	con.close()
 
@@ -67,12 +100,25 @@ def change_article_lang(user_id: str, lang: str):
 	con.commit()
 	con.close()
 
-def add_article(user_id: str, category: str, name: str, link: str):
+def add_article(user_id: str, link: str):
 	con = sqlite3.connect(config.db_name)
 	c = con.cursor()
 	c.execute("""INSERT INTO articles(user_id, category, name, link)
-	VALUES (?,?,?,?)""", (user_id, category, name, link))
-	logger.info("%s added %s article to %s category", user_id, name, category)
+	VALUES (?,?,?,?)""", (user_id,'43d5f6tg7yh89','43d5f6tg7yh89', link))
+	con.commit()
+	con.close()
+
+def add_article_cat(user_id: str, category:str):
+	con = sqlite3.connect(config.db_name)
+	c = con.cursor()
+	c.execute("""UPDATE articles SET category=? WHERE user_id=? and category=?""", (category,user_id,'43d5f6tg7yh89'))
+	con.commit()
+	con.close()
+
+def add_article_name(user_id: str, name:str):
+	con = sqlite3.connect(config.db_name)
+	c = con.cursor()
+	c.execute("""UPDATE articles SET name=? WHERE user_id=? and name=?""", (name,user_id,'43d5f6tg7yh89'))
 	con.commit()
 	con.close()
 
@@ -89,19 +135,20 @@ def get_article(user_id: str, category: str, name: str) -> str:
 def get_categories(user_id: str) -> list:
 	con = sqlite3.connect(config.db_name)
 	c = con.cursor()
-	c.execute("""SELECT DISTINCT category FROM articles WHERE user_id=?""", (user_id,))
+	c.execute("""SELECT DISTINCT category FROM articles WHERE user_id=? AND category!=?""", (user_id,'43d5f6tg7yh89'))
 	result = c.fetchall()
 	con.close()
-	return [e[0] for e in result]
+	result = [e[0] for e in result]
+	return result
 
 def get_articles(user_id: str, category: str) -> list:
 	con = sqlite3.connect(config.db_name)
 	c = con.cursor()
-	c.execute("""SELECT name FROM articles WHERE user_id=? AND category=?""",
+	c.execute("""SELECT name,link FROM articles WHERE user_id=? AND category=?""",
 	(user_id,category))
 	result = c.fetchall()
 	con.close()
-	return [e[0] for e in result]
+	return result
 
 def rename_article(user_id:str,category:str, name: str, new_name: str):
 	con = sqlite3.connect(config.db_name)
@@ -123,12 +170,21 @@ def rename_category(user_id: str, category: str, new_name: str):
 	con.commit()
 	con.close()
 
+def cancel_save(user_id):
+	con = sqlite3.connect(config.db_name)
+	c = con.cursor()
+	c.execute("""DELETE FROM articles
+	WHERE user_id = ? AND name = ?""", (user_id, '43d5f6tg7yh89'))
+	con.commit()
+	con.close()
+
+
 def delete_article(user_id: str, category: str, name: str):
 	con = sqlite3.connect(config.db_name)
 	c = con.cursor()
 	c.execute("""DELETE FROM articles
 	WHERE user_id = ? AND category = ? AND name = ?""", (user_id, category, name))
-	logger.info("%s deleted %s article", user_id, article)
+	logger.info("%s deleted %s article", user_id, name)
 	con.commit()
 	con.close()
 

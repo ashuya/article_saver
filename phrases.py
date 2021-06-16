@@ -8,18 +8,10 @@ phrases['ru']['help'] = """
 С помощью этих команд можно
 
 /botlang - выбрать язык, на котором я буду с вами общаться
-/lang - выбрать язык искомых статей
 /find - найти статьи
-/save - сохранить статью(можете сохранить любую ссылку)
 
 /listcat - посмотреть список ваших категорий
-/listart - посмотреть список статей по одной из категорий
-/showart - посмотреть статью
-
-/renameart - переименовать статью(они сохраняются по выбранным вами названиям)
-/renamecat - переименовать категорию(статьи сохраняются по выбранным вами категориям)
-/deleteart - удалить статью
-/deletecat - удалить категорию(все статьи из этой категории тоже удаляются)
+/listart - посмотреть список статей
 
 Бот находится в разработке, вопросы можно задавать разработчику: @desentcare
 """
@@ -31,6 +23,7 @@ phrases['ru']['news_query'] = "Введите поисковой запроc\nН
 phrases['ru']['news_query_canceled'] = "Поик остановлен!"
 phrases['ru']['news_query_searching'] = "Ищем..."
 phrases['ru']['news_query_article_show'] = "Статья №"
+phrases['ru']['news_query_not_found'] = "Ничего не нашёл("
 
 phrases['ru']['save_article'] = "Сохраняю статью\n"
 phrases['ru']['save_article_category'] = "В какую категорию сохранить вашу статью?\n\
@@ -40,6 +33,8 @@ phrases['ru']['article_name_same'] = \
 "Имя занято. Сначала удалите или переименуйте статью с этим именем"
 phrases['ru']['save_article_complete'] = "Статья сохранена!"
 phrases['ru']['save_article_cancel'] = "Сохранение стати остановлено!"
+phrases['ru']['no_categories'] = "Категории не найдены. Напишите название новой"
+phrases['ru']['wrong_category'] = "Не корректный выбор. Попробуйте ещё раз\nВаши категории:\n"
 
 phrases['ru']['rename_article_choose_category'] = \
 "Из какой категории вы хотите переименовать статью?\n\
@@ -90,6 +85,7 @@ phrases['ru']['delete_article_complite'] = "Статья удалена!"
 
 phrases['ru']['indev'] = "Команда разрабатывается"
 phrases['ru']['unknown'] = "Команда не распознана"
+phrases['ru']['stop'] = "Команда отменена"
 
 #English
 
@@ -98,18 +94,10 @@ I can find and save articles on your topic.
 With this commands you can
 
 /botlang - change bot language
-/lang - change article language
 /find - search for articles
-/save - save article(you can save any link)
 
 /listcat - show list of categories
-/listart - show list of articles in category
-/showart - show one article
-
-/renameart - change nickname for article
-/renamecat - change nickname for category
-/deleteart - delete article
-/deletecat - delete category(also deletes all articles in this category)
+/listart - show list of articles
 
 Bot is under development, send your questions to @desentcare
 """
@@ -121,6 +109,8 @@ phrases['en']['news_query'] = "Input search query\n/cancel to stop search"
 phrases['en']['news_query_canceled'] = "Search canceled!"
 phrases['en']['news_query_searching'] = "Searching..."
 phrases['en']['news_query_article_show'] = "Article №"
+phrases['en']['news_query_not_found'] = "I found nothing("
+
 
 phrases['en']['save_article'] = "Saving article\n"
 phrases['en']['save_article_category'] = "In which category I must save article?\n\
@@ -130,6 +120,8 @@ phrases['en']['save_article_name'] = "Input name of your article to save"
 phrases['en']['article_name_same'] = "This name is taken. Delete or rename old article to save new with this name"
 phrases['en']['save_article_complete'] = "Article was saved!"
 phrases['en']['save_article_cancel'] = "Article saving was stopped"
+phrases['en']['no_categories'] = "No categories found, text a new category"
+phrases['en']['wrong_category'] = "Incorrect choice. Try again\nYour categories:\n"
 
 phrases['en']['rename_article_choose_category'] = "From which category do you want to rename your article?\n\
 Input number or name of category from the list\n\
@@ -179,3 +171,4 @@ phrases['en']['delete_article_complite'] = "Article was deleted!"
 
 phrases['en']['indev'] = "Command in development"
 phrases['en']['unknown'] = "Unknown command"
+phrases['en']['stop'] = "Command canceled"
